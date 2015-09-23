@@ -1,0 +1,13 @@
+{
+    "name": "achristodoulou/sugarcrm",
+    "description": "An improved version of legacy SugarCrm 6.5",
+    "type": "project",
+    "license": "GNU Affero General Public License",
+    "authors": [
+        {
+            "name": "Andreas Christodoulou",
+            "email": "andreas22@gmail.com"
+        }
+    ],
+    "require": {}
+}
