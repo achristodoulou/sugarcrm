@@ -5540,7 +5540,6 @@ $md5_string = array (
   './metadata/acl_roles_actionsMetaData.php' => '4d6ecdbf5b06104a468ec955616121e3',
   './sugar_version.php' => '6deabbf34ed192cb20b682814cc63134',
   './cron.php' => 'a130498059ba9e03ad8c32a9cc79faca',
-  './log4php/LoggerManager.php' => 'fa34194306cd50c01b71d8d5060ee362',
   './TreeData.php' => '261ed723f457b1fabd1c33ae230120e4',
   './emailmandelivery.php' => 'dc39249c3938bc045a0b9371de61a353',
   './vCard.php' => '1f35aab3abf42e9298ca8c65e316eaba',

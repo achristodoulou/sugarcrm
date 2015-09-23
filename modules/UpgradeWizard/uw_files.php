@@ -86,7 +86,6 @@ if(count($uwFilesCurrent) < 5) {
 
 $uw_files = array(
     // standard files we steamroll with no warning
-    'log4php.properties',
     'include/utils/encryption_utils.php',
     'include/Pear/Crypt_Blowfish/Blowfish.php',
     'include/Pear/Crypt_Blowfish/Blowfish/DefaultKey.php',

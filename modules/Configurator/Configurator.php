@@ -225,6 +225,7 @@ class Configurator {
                 return false;
             }
 		}
+		return true;
 	}
 
 	function checkTempImage($path)
@@ -244,11 +245,13 @@ class Configurator {
         $this->error = null;
         return $e;
     }
-    /**
-     * Saves the company logo to the custom directory for the default theme, so all themes can use it
-     *
-     * @param string $path path to the image to set as the company logo image
-     */
+
+	/**
+	 * Saves the company logo to the custom directory for the default theme, so all themes can use it
+	 *
+	 * @param string $path path to the image to set as the company logo image
+	 * @return bool
+	 */
 	function saveCompanyLogo($path)
     {
     	$path = $this->checkTempImage($path);
@@ -261,56 +264,12 @@ class Configurator {
         copy($path,'custom/'. SugarThemeRegistry::current()->getDefaultImagePath(). '/company_logo.png');
         sugar_cache_clear('company_logo_attributes');
         SugarThemeRegistry::clearAllCaches();
+		return true;
 	}
-	/**
-	 * @params : none
-	 * @return : An array of logger configuration properties including log size, file extensions etc. See SugarLogger for more details.
-	 * Parses the old logger settings from the log4php.properties files.
-	 *
-	 */
 
 	function parseLoggerSettings(){
 		if(!function_exists('setDeepArrayValue')){
 			require('include/utils/array_utils.php');
-		}
-		if (file_exists('log4php.properties')) {
-			$fileContent = file_get_contents('log4php.properties');
-			$old_props = explode('\n', $fileContent);
-			$new_props = array();
-			$key_names=array();
-			foreach($old_props as $value) {
-				if(!empty($value) && !preg_match("/^\/\//", $value)) {
-					$temp = explode("=",$value);
-					$property = isset( $temp[1])? $temp[1] : array();
-					if(preg_match("/log4php.appender.A2.MaxFileSize=/",$value)){
-						setDeepArrayValue($this->config, 'logger_file_maxSize', rtrim( $property));
-					}
-					elseif(preg_match("/log4php.appender.A2.File=/", $value)){
-						$ext = preg_split("/\./",$property);
-						if(preg_match( "/^\./", $property)){ //begins with .
-							setDeepArrayValue($this->config, 'logger_file_ext', isset($ext[2]) ? '.' . rtrim( $ext[2]):'.log');
-							setDeepArrayValue($this->config, 'logger_file_name', rtrim( ".".$ext[1]));
-						}else{
-							setDeepArrayValue($this->config, 'logger_file_ext', isset($ext[1]) ? '.' . rtrim( $ext[1]):'.log');
-							setDeepArrayValue($this->config, 'logger_file_name', rtrim( $ext[0] ));
-						}
-					}elseif(preg_match("/log4php.appender.A2.layout.DateFormat=/",$value)){
-						setDeepArrayValue($this->config, 'logger_file_dateFormat', trim(rtrim( $property), '""'));
-
-					}elseif(preg_match("/log4php.rootLogger=/",$value)){
-						$property = explode(",",$property);
-						setDeepArrayValue($this->config, 'logger_level', rtrim( $property[0]));
-					}
-				}
-			}
-			setDeepArrayValue($this->config, 'logger_file_maxLogs', 10);
-			setDeepArrayValue($this->config, 'logger_file_suffix', "%m_%Y");
-			$this->handleOverride();
-			unlink('log4php.properties');
-			$GLOBALS['sugar_config'] = $this->config; //load the rest of the sugar_config settings.
-			require_once('include/SugarLogger/SugarLogger.php');
-			//$logger = new SugarLogger(); //this will create the log file.
-
 		}
 
 		if (!isset($this->config['logger']) || empty($this->config['logger'])) {
@@ -325,12 +284,5 @@ class Configurator {
 			'level' => 'fatal');
 		}
 		$this->handleOverride(true);
-
-
 	}
-
-
-
-
 }
-?>

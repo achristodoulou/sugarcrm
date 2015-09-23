@@ -673,15 +673,6 @@ function handleDbCreateDatabase() {
     echo $mod_strings['LBL_PERFORM_DONE'];
 }
 
-
-/**
- * handles creation of Log4PHP properties file
- * This function has been deprecated.  Use SugarLogger.
- */
-function handleLog4Php() {
-    return;
-}
-
 function installLog($entry) {
     global $mod_strings;
     $nl = '
@@ -794,8 +785,6 @@ function handleSugarConfig() {
         }
     }
 
-	/*nsingh(bug 22402): Consolidate logger settings under $config['logger'] as liked by the new logger! If log4pphp exists,
-		these settings will be overwritten by those in log4php.properties when the user access admin->system settings.*/
     $sugar_config['logger']	=
     	array ('level'=>$setup_site_log_level,
     	 'file' => array(
@@ -930,7 +919,7 @@ if (ini_get('suhosin.perdir') !== false && strpos(ini_get('suhosin.perdir'), 'e'
 $restrict_str .= <<<EOQ
 RedirectMatch 403 {$ignoreCase}.*\.log$
 RedirectMatch 403 {$ignoreCase}/+not_imported_.*\.txt
-RedirectMatch 403 {$ignoreCase}/+(soap|cache|xtemplate|data|examples|include|log4php|metadata|modules)/+.*\.(php|tpl)
+RedirectMatch 403 {$ignoreCase}/+(soap|cache|xtemplate|data|examples|include|metadata|modules)/+.*\.(php|tpl)
 RedirectMatch 403 {$ignoreCase}/+emailmandelivery\.php
 RedirectMatch 403 {$ignoreCase}/+upload
 RedirectMatch 403 {$ignoreCase}/+custom/+blowfish
@@ -1024,8 +1013,6 @@ function handleWebConfig()
     array('1'=>'examples/(.*).php' ,'2'=>'index.php'),
     array('1'=>'include/(.*).php' ,'2'=>'index.php'),
     array('1'=>'include/(.*)/(.*).php' ,'2'=>'index.php'),
-    array('1'=>'log4php/(.*).php' ,'2'=>'index.php'),
-    array('1'=>'log4php/(.*)/(.*)' ,'2'=>'index.php'),
     array('1'=>'metadata/(.*)/(.*).php' ,'2'=>'index.php'),
     array('1'=>'modules/(.*)/(.*).php' ,'2'=>'index.php'),
     array('1'=>'soap/(.*).php' ,'2'=>'index.php'),

@@ -53,7 +53,6 @@
             <directory suffix=".php">./examples</directory>
             <directory suffix=".php">./jscalendar</directory>
             <directory suffix=".php">./jssource</directory>
-            <directory suffix=".php">./log4php</directory>
             <directory suffix=".php">./metadata</directory>
             <directory suffix=".php">./test</directory>
             <directory suffix=".php">./themes</directory>
